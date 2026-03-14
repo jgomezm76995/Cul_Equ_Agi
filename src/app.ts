@@ -9,6 +9,16 @@ import { createPreRequestFlow } from './flows/pre-request.flow'
 import { createServiceInfoFlow } from './flows/service-info.flow'
 import { createWelcomeFlow } from './flows/welcome.flow'
 
+const originalConsoleInfo = console.info.bind(console)
+
+console.info = (...args: unknown[]) => {
+    if (args[0] === 'Closing session:') {
+        return
+    }
+
+    originalConsoleInfo(...args)
+}
+
 const PORT = process.env.PORT ?? 3008
 const BAILEYS_VERSION = [2, 3000, 1030780948] as const
 const USE_PAIRING_CODE = process.env.USE_PAIRING_CODE === 'true'
