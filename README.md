@@ -1,44 +1,167 @@
-<p align="center">
-  <a href="https://builderbot.app/">
-    <picture>
-      <img src="https://builderbot.app/assets/thumbnail-vector.png" height="80">
-    </picture>
-    <h2 align="center">BuilderBot</h2>
-  </a>
-</p>
+# Asistente Conversacional de Transporte Especial en Bogotá (MVP)
 
+MVP en WhatsApp para atención inicial de usuarios que necesitan transporte especial en Bogotá.
 
+El bot está construido con:
 
-<p align="center">
-  <a aria-label="NPM version" href="https://www.npmjs.com/package/@builderbot/bot">
-    <img alt="" src="https://img.shields.io/npm/v/@builderbot/bot?color=%2300c200&label=%40bot-whatsapp">
-  </a>
-  <a aria-label="Join the community on GitHub" href="https://link.codigoencasa.com/DISCORD">
-    <img alt="" src="https://img.shields.io/discord/915193197645402142?logo=discord">
-  </a>
-</p>
+- BuilderBot
+- TypeScript
+- Provider Baileys
+- Memoria en `MemoryDB`
 
+El objetivo del MVP es orientar al usuario en el primer contacto: explicar el servicio, responder preguntas frecuentes, capturar una pre-solicitud y dejar claro que la confirmación final depende de revisión humana.
 
-## Getting Started
+---
 
-With this library, you can build automated conversation flows agnostic to the WhatsApp provider, set up automated responses for frequently asked questions, receive and respond to messages automatically, and track interactions with customers. Additionally, you can easily set up triggers to expand functionalities limitlessly.
+## Qué resuelve este MVP
 
+- Bienvenida y menú principal de opciones
+- Información básica del servicio y su alcance
+- Respuestas a preguntas frecuentes
+- Captura guiada de pre-solicitud (datos mínimos)
+- Derivación a atención humana / revisión posterior
+- Comandos de navegación (`menu`, `salir`, etc.)
+
+---
+
+## Alcance (y límites)
+
+Incluye únicamente la etapa de atención inicial conversacional.
+
+No incluye:
+
+- pagos
+- despacho real
+- geolocalización/mapas
+- CRM o integraciones empresariales
+- autenticación de usuarios
+- base de datos persistente
+
+---
+
+## Estructura principal
+
+```text
+src/
+  app.ts
+  flows/
+    welcome.flow.ts
+    service-info.flow.ts
+    faq.flow.ts
+    pre-request.flow.ts
+    human-handoff.flow.ts
+    goodbye.flow.ts
+    shared/
+      navigation.ts
+  utils/
+    conversation-logger.ts
 ```
-npm create builderbot@latest
+
+- `app.ts` ensambla flujos, provider, DB y endpoints.
+- `src/flows/` contiene la lógica conversacional por responsabilidad.
+- `conversation-logger.ts` imprime conversación por contacto con colores.
+
+---
+
+## Requisitos
+
+- Node.js 22+
+- pnpm 10+
+- Cuenta de WhatsApp para vincular por QR
+
+---
+
+## Variables de entorno
+
+Usa `.env` (puedes partir de `.env.example`):
+
+```env
+PORT=3008
+USE_PAIRING_CODE=false
+PHONE_NUMBER=573156789900
 ```
 
+Notas:
 
-## Documentation
+- Para flujo QR recomendado: `USE_PAIRING_CODE=false`.
+- `PHONE_NUMBER` se mantiene como ejemplo anonimizado.
 
-Visit [builderbot](https://builderbot.app/) to view the full documentation.
+---
 
+## Ejecución local
 
-## Official Course
+Instalar dependencias:
 
-If you want to discover all the functions and features offered by the library you can take the course.
-[View Course](https://app.codigoencasa.com/courses/builderbot?refCode=LEIFER)
+```bash
+pnpm install
+```
 
+Desarrollo (lint + nodemon):
 
-## Contact Us
-- [💻 Discord](https://link.codigoencasa.com/DISCORD)
-- [👌 𝕏 (Twitter)](https://twitter.com/leifermendez)
+```bash
+pnpm run dev
+```
+
+Build:
+
+```bash
+pnpm run build
+```
+
+---
+
+## Cómo probar rápido
+
+1. Ejecuta `pnpm run dev`.
+2. Escanea el QR cuando aparezca `⚡⚡ ACTION REQUIRED ⚡⚡`.
+3. Escribe por WhatsApp:
+   - `hola`
+   - `1` / `info`
+   - `2` / `faq`
+   - `3` / `solicitar`
+   - `4` / `humano`
+   - `menu`
+   - `salir`
+
+Endpoints expuestos:
+
+- `POST /v1/messages`
+- `POST /v1/register`
+- `POST /v1/samples`
+- `POST /v1/blacklist`
+- `GET /v1/blacklist/list`
+
+---
+
+## CI / GitHub Actions
+
+Hay dos workflows:
+
+- `lint.yml`
+- `build.yml`
+
+Ambos corren en `push` a `main` y `dev`, y en `pull_request` hacia `main`.
+
+---
+
+## Rama de trabajo
+
+El desarrollo se realiza sobre `dev`.
+
+Flujo sugerido:
+
+1. trabajar en `dev`
+2. validar CI
+3. abrir Pull Request a `main`
+
+---
+
+## Equipo
+
+- Juan Fernando Gómez Mayorca
+- Armando José Laguna Herrera
+- Néstor Mauricio Díaz Muñoz
+- Rubén Enrique Cabarcas Mendoza
+- Rodrigo Alejandro Medina Pulido
+
+Docente: Mauricio Javier Guerrero Cabarcas
