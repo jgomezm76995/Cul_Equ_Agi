@@ -7,6 +7,7 @@ import { goodbyeFlow } from './flows/goodbye.flow'
 import { createHumanHandoffFlow } from './flows/human-handoff.flow'
 import { createPreRequestFlow } from './flows/pre-request.flow'
 import { createServiceInfoFlow } from './flows/service-info.flow'
+import { logIncomingConversation, logOutgoingConversation } from './utils/conversation-logger'
 import { createWelcomeFlow } from './flows/welcome.flow'
 
 const originalConsoleInfo = console.info.bind(console)
@@ -80,6 +81,18 @@ const main = async () => {
             }
             : {}),
     })
+
+    const originalSendMessage = adapterProvider.sendMessage.bind(adapterProvider)
+
+    adapterProvider.on('message', (payload: { from?: string; body?: string; name?: string }) => {
+        logIncomingConversation(payload)
+    })
+
+    adapterProvider.sendMessage = async (userId: string, message: unknown, options?: { media?: unknown }) => {
+        logOutgoingConversation(userId, message, options)
+        return originalSendMessage(userId, message, options)
+    }
+
     const adapterDB = new Database()
 
     const { handleCtx, httpServer } = await createBot({
