@@ -1,69 +1,71 @@
 import 'dotenv/config'
-import { join } from 'path'
-import { createBot, createProvider, createFlow, addKeyword, utils } from '@builderbot/bot'
+import { createBot, createProvider, createFlow } from '@builderbot/bot'
 import { MemoryDB as Database } from '@builderbot/bot'
 import { BaileysProvider as Provider } from '@builderbot/provider-baileys'
+import { createFaqFlow } from './flows/faq.flow'
+import { goodbyeFlow } from './flows/goodbye.flow'
+import { createHumanHandoffFlow } from './flows/human-handoff.flow'
+import { createPreRequestFlow } from './flows/pre-request.flow'
+import { createServiceInfoFlow } from './flows/service-info.flow'
+import { logIncomingConversation, logOutgoingConversation } from './utils/conversation-logger'
+import { createWelcomeFlow } from './flows/welcome.flow'
+
+const originalConsoleInfo = console.info.bind(console)
+
+console.info = (...args: unknown[]) => {
+    if (args[0] === 'Closing session:') {
+        return
+    }
+
+    originalConsoleInfo(...args)
+}
 
 const PORT = process.env.PORT ?? 3008
 const BAILEYS_VERSION = [2, 3000, 1030780948] as const
 const USE_PAIRING_CODE = process.env.USE_PAIRING_CODE === 'true'
 const PHONE_NUMBER = process.env.PHONE_NUMBER?.trim() || null
 
-const discordFlow = addKeyword<Provider, Database>('doc').addAnswer(
-    ['You can see the documentation here', '📄 https://builderbot.app/docs \n', 'Do you want to continue? *yes*'].join(
-        '\n'
-    ),
-    { capture: true },
-    async (ctx, { gotoFlow, flowDynamic }) => {
-        if (ctx.body.toLocaleLowerCase().includes('yes')) {
-            return gotoFlow(registerFlow)
-        }
-        await flowDynamic('Thanks!')
-        return
-    }
-)
-
-const welcomeFlow = addKeyword<Provider, Database>(['hi', 'hello', 'hola'])
-    .addAnswer(`🙌 Hello welcome to this *Chatbot*`)
-    .addAnswer(
-        [
-            'I share with you the following links of interest about the project',
-            '👉 *doc* to view the documentation',
-        ].join('\n'),
-        { delay: 800, capture: true },
-        async (ctx, { fallBack }) => {
-            if (!ctx.body.toLocaleLowerCase().includes('doc')) {
-                return fallBack('You should type *doc*')
-            }
-            return
-        },
-        [discordFlow]
-    )
-
-const registerFlow = addKeyword<Provider, Database>(utils.setEvent('REGISTER_FLOW'))
-    .addAnswer(`What is your name?`, { capture: true }, async (ctx, { state }) => {
-        await state.update({ name: ctx.body })
-    })
-    .addAnswer('What is your age?', { capture: true }, async (ctx, { state }) => {
-        await state.update({ age: ctx.body })
-    })
-    .addAction(async (_, { flowDynamic, state }) => {
-        await flowDynamic(`${state.get('name')}, thanks for your information!: Your age: ${state.get('age')}`)
-    })
-
-const fullSamplesFlow = addKeyword<Provider, Database>(['samples', utils.setEvent('SAMPLES')])
-    .addAnswer(`💪 I'll send you a lot files...`)
-    .addAnswer(`Send image from Local`, { media: join(process.cwd(), 'assets', 'sample.png') })
-    .addAnswer(`Send video from URL`, {
-        media: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTJ0ZGdjd2syeXAwMjQ4aWdkcW04OWlqcXI3Ynh1ODkwZ25zZWZ1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LCohAb657pSdHv0Q5h/giphy.mp4',
-    })
-    .addAnswer(`Send audio from URL`, { media: 'https://cdn.freesound.org/previews/728/728142_11861866-lq.mp3' })
-    .addAnswer(`Send file from URL`, {
-        media: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-    })
-
 const main = async () => {
-    const adapterFlow = createFlow([welcomeFlow, registerFlow, fullSamplesFlow])
+    const flows: Record<string, any> = {}
+
+    flows.preRequestFlow = createPreRequestFlow({
+        getWelcomeFlow: () => flows.welcomeFlow,
+        getHumanHandoffFlow: () => flows.humanHandoffFlow,
+    })
+
+    flows.humanHandoffFlow = createHumanHandoffFlow({
+        getWelcomeFlow: () => flows.welcomeFlow,
+        getPreRequestFlow: () => flows.preRequestFlow,
+    })
+
+    flows.faqFlow = createFaqFlow({
+        getWelcomeFlow: () => flows.welcomeFlow,
+        getPreRequestFlow: () => flows.preRequestFlow,
+        getHumanHandoffFlow: () => flows.humanHandoffFlow,
+    })
+
+    flows.serviceInfoFlow = createServiceInfoFlow({
+        getWelcomeFlow: () => flows.welcomeFlow,
+        getFaqFlow: () => flows.faqFlow,
+        getPreRequestFlow: () => flows.preRequestFlow,
+        getHumanHandoffFlow: () => flows.humanHandoffFlow,
+    })
+
+    flows.welcomeFlow = createWelcomeFlow({
+        getServiceInfoFlow: () => flows.serviceInfoFlow,
+        getFaqFlow: () => flows.faqFlow,
+        getPreRequestFlow: () => flows.preRequestFlow,
+        getHumanHandoffFlow: () => flows.humanHandoffFlow,
+    })
+
+    const adapterFlow = createFlow([
+        flows.welcomeFlow,
+        flows.serviceInfoFlow,
+        flows.faqFlow,
+        flows.preRequestFlow,
+        flows.humanHandoffFlow,
+        goodbyeFlow,
+    ])
 
     if (USE_PAIRING_CODE && !PHONE_NUMBER) {
         console.warn('USE_PAIRING_CODE está activo pero PHONE_NUMBER no fue configurado.')
@@ -79,6 +81,18 @@ const main = async () => {
             }
             : {}),
     })
+
+    const originalSendMessage = adapterProvider.sendMessage.bind(adapterProvider)
+
+    adapterProvider.on('message', (payload: { from?: string; body?: string; name?: string }) => {
+        logIncomingConversation(payload)
+    })
+
+    adapterProvider.sendMessage = async (userId: string, message: unknown, options?: { media?: unknown }) => {
+        logOutgoingConversation(userId, message, options)
+        return originalSendMessage(userId, message, options)
+    }
+
     const adapterDB = new Database()
 
     const { handleCtx, httpServer } = await createBot({
@@ -100,7 +114,7 @@ const main = async () => {
         '/v1/register',
         handleCtx(async (bot, req, res) => {
             const { number, name } = req.body
-            await bot.dispatch('REGISTER_FLOW', { from: number, name })
+            await bot.dispatch('PRE_REQUEST_FLOW', { from: number, name })
             return res.end('trigger')
         })
     )
@@ -109,7 +123,7 @@ const main = async () => {
         '/v1/samples',
         handleCtx(async (bot, req, res) => {
             const { number, name } = req.body
-            await bot.dispatch('SAMPLES', { from: number, name })
+            await bot.dispatch('FAQ_FLOW', { from: number, name })
             return res.end('trigger')
         })
     )
