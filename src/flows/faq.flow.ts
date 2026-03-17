@@ -6,8 +6,8 @@ import {
     isHumanCommand,
     isMenuCommand,
     isPreRequestCommand,
-    normalizeText,
 } from './shared/navigation'
+import { findAnswer } from '../utils/faq-matcher'
 
 type FlowGetter = () => any
 
@@ -17,31 +17,16 @@ type FaqFlowDeps = {
     getHumanHandoffFlow: FlowGetter
 }
 
-const faqAnswers: Record<string, string> = {
-    solicitar:
-        'Para iniciar, debes compartir datos básicos como nombre, contacto, origen, destino, momento estimado del traslado, tipo de necesidad y observaciones.',
-    datos:
-        'Los datos mínimos del MVP son: nombre, teléfono o medio de contacto, origen, destino, fecha o momento estimado, tipo de necesidad y observaciones.',
-    proceso:
-        'El proceso es: orientación inicial, captura de la pre-solicitud y revisión posterior por una persona del equipo antes de cualquier confirmación.',
-    alcance:
-        'El bot informa, guía y recoge datos iniciales. No agenda definitivamente, no cobra y no despacha servicios reales.',
-    humano:
-        'Si necesitas continuidad con una persona, el bot te orienta a dejar tu pre-solicitud para revisión posterior por atención humana.',
-}
-
 export const createFaqFlow = ({ getWelcomeFlow, getPreRequestFlow, getHumanHandoffFlow }: FaqFlowDeps) =>
     addKeyword<Provider, Database>(['faq', 'preguntas', 'preguntas frecuentes', 'dudas', '2', utils.setEvent('FAQ_FLOW')])
         .addAnswer(
             [
-                'Estas son las preguntas frecuentes que puedo resolver:',
-                '• *solicitar*: cómo se solicita el servicio',
-                '• *datos*: qué información necesitas compartir',
-                '• *proceso*: cómo sigue la atención después del bot',
-                '• *alcance*: qué hace el bot y qué no hace',
-                '• *humano*: cómo continuar con atención humana',
+                '❓ *Base de conocimiento*',
+                'Escribe tu pregunta con tus propias palabras y buscaré la mejor respuesta.',
                 '',
-                'Escribe una opción, o usa *menu* para volver.',
+                'Ejemplos: "¿cuál es el horario?", "cómo cancelo una solicitud", "qué datos necesitan"',
+                '',
+                'También puedes escribir *humano* para hablar con una persona, o *menu* para volver.',
             ].join('\n'),
             { capture: true },
             async (ctx, { gotoFlow, flowDynamic, fallBack }) => {
@@ -62,14 +47,24 @@ export const createFaqFlow = ({ getWelcomeFlow, getPreRequestFlow, getHumanHando
                     return
                 }
 
-                const option = normalizeText(ctx.body)
-                const answer = faqAnswers[option]
+                const match = findAnswer(ctx.body)
 
-                if (!answer) {
-                    return fallBack('No entendí esa FAQ. Escribe *solicitar*, *datos*, *proceso*, *alcance*, *humano* o *menu*.')
+                if (!match) {
+                    return fallBack(
+                        '🔎 No encontré una respuesta exacta para eso. Intenta con otras palabras, escribe *humano* para atención personalizada, o *menu* para volver al inicio.'
+                    )
                 }
 
-                await flowDynamic(answer)
-                return fallBack('Si quieres otra respuesta frecuente, escribe otra opción. También puedes usar *solicitar*, *humano* o *menu*.')
+                await flowDynamic([
+                    `*${match.question}*`,
+                    '',
+                    match.answer,
+                    '',
+                    '¿Tienes otra pregunta? Escríbela directamente. O usa *menu* para volver al inicio.',
+                ].join('\n'))
+
+                return fallBack(
+                    '¿Tienes otra pregunta? Escríbela o usa *menu* / *humano*.'
+                )
             }
         )
