@@ -1,4 +1,5 @@
 import typescript from 'rollup-plugin-typescript2'
+import json from '@rollup/plugin-json'
 
 export default {
     input: 'src/app.ts',
@@ -9,5 +10,5 @@ export default {
     onwarn: (warning) => {
         if (warning.code === 'UNRESOLVED_IMPORT') return
     },
-    plugins: [typescript()],
+    plugins: [json(), typescript()],
 }

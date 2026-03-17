@@ -1,0 +1,302 @@
+[
+  {
+    "id": 1,
+    "keywords": ["horario", "atención", "atencion", "hora", "abren", "cierran", "abierto", "disponible", "cuando atienden"],
+    "question": "¿Cuál es el horario de atención?",
+    "answer": "📅 El horario de atención es de lunes a viernes en horario administrativo institucional. Fuera de ese horario puedes dejar tu pre-solicitud aquí y será revisada el siguiente día hábil."
+  },
+  {
+    "id": 2,
+    "keywords": ["respuesta", "tiempo respuesta", "cuanto demoran", "cuánto demoran", "espera", "demora", "tarda", "días"],
+    "question": "¿Cuánto tiempo tardan en responder?",
+    "answer": "⏱ El tiempo de respuesta depende del tipo de caso y la prioridad. Generalmente se da respuesta dentro de los dos días hábiles siguientes al registro de la solicitud."
+  },
+  {
+    "id": 3,
+    "keywords": ["servicio", "que hace", "qué hace", "que ofrece", "qué ofrece", "para que sirve", "para qué sirve", "funciona"],
+    "question": "¿Qué hace este servicio?",
+    "answer": "🤖 Este asistente ofrece orientación inicial, captura de pre-solicitudes y derivación a revisión humana. No agenda definitivamente ni despacha servicios reales; es el primer paso del proceso."
+  },
+  {
+    "id": 4,
+    "keywords": ["solicitar", "como solicitar", "cómo solicitar", "pedir", "hacer solicitud", "iniciar", "empezar"],
+    "question": "¿Cómo hago una solicitud?",
+    "answer": "📝 Escribe *solicitud* o *3* para iniciar el flujo de pre-solicitud. El bot te guiará paso a paso capturando los datos necesarios para que el equipo la procese."
+  },
+  {
+    "id": 5,
+    "keywords": ["datos", "información necesaria", "informacion necesaria", "que necesitan", "qué necesitan", "documentos", "requisitos"],
+    "question": "¿Qué datos necesito tener listos?",
+    "answer": "📋 Necesitarás: nombre completo, teléfono o medio de contacto, origen del traslado, destino, fecha u hora estimada, tipo de necesidad y observaciones adicionales."
+  },
+  {
+    "id": 6,
+    "keywords": ["humano", "persona", "asesor", "funcionario", "hablar con alguien", "hablar persona", "contacto humano"],
+    "question": "¿Puedo hablar con una persona?",
+    "answer": "🙋 Sí. Escribe *humano* o *9* y el sistema registrará tu caso para que un miembro del equipo te contacte directamente."
+  },
+  {
+    "id": 7,
+    "keywords": ["confirmar", "confirmación", "confirmacion", "aprobada", "aprobado", "acepta", "aceptada"],
+    "question": "¿Mi solicitud queda confirmada al enviarla aquí?",
+    "answer": "⚠️ No. La pre-solicitud queda pendiente de revisión humana. La confirmación definitiva la entrega una persona del equipo después de revisar tu caso."
+  },
+  {
+    "id": 8,
+    "keywords": ["costo", "precio", "valor", "cuanto cuesta", "cuánto cuesta", "gratis", "cobran", "pago", "tarifa"],
+    "question": "¿Tiene costo el servicio?",
+    "answer": "💰 El chatbot no gestiona cobros ni tarifas. Para información sobre costos del servicio contáctate directamente con el equipo de atención."
+  },
+  {
+    "id": 9,
+    "keywords": ["cancelar", "anular", "cancelar solicitud", "anular solicitud", "retirar", "borrar"],
+    "question": "¿Cómo cancelo una solicitud?",
+    "answer": "🚫 Para cancelar o modificar una solicitud ya registrada, contacta al equipo humano directamente escribiendo *humano* o *9*."
+  },
+  {
+    "id": 10,
+    "keywords": ["modificar", "cambiar", "actualizar solicitud", "editar", "corregir"],
+    "question": "¿Puedo modificar una solicitud?",
+    "answer": "✏️ El bot no permite editar solicitudes ya enviadas. Escribe *humano* o *9* para que una persona del equipo te ayude a realizar la modificación."
+  },
+  {
+    "id": 11,
+    "keywords": ["estado", "estado solicitud", "como va", "cómo va", "seguimiento", "track", "rastrear"],
+    "question": "¿Cómo verifico el estado de mi solicitud?",
+    "answer": "🔍 El bot no muestra estados de solicitudes en tiempo real. Escribe *humano* o *9* para que el equipo te informe el estado de tu caso."
+  },
+  {
+    "id": 12,
+    "keywords": ["adjuntar", "archivo", "documento", "foto", "imagen", "evidencia", "subir"],
+    "question": "¿Puedo adjuntar documentos o imágenes?",
+    "answer": "📎 Sí, puedes agregar archivos cuando el equipo humano te contacte. A través del bot solo se captura información de texto."
+  },
+  {
+    "id": 13,
+    "keywords": ["privacidad", "datos personales", "protección", "proteccion", "habeas data", "confidencial"],
+    "question": "¿Mis datos están protegidos?",
+    "answer": "🔒 Sí. La información que compartes queda registrada de forma confidencial y se usa únicamente para gestionar tu solicitud, conforme a las políticas de tratamiento de datos de la institución."
+  },
+  {
+    "id": 14,
+    "keywords": ["consentimiento", "autorización", "autorizacion", "aceptar", "acepto", "terms"],
+    "question": "¿Es obligatorio dar el consentimiento de datos?",
+    "answer": "✅ Sí, es un paso requerido en la pre-solicitud. Sin tu autorización no es posible procesar la información según la normatividad vigente de protección de datos."
+  },
+  {
+    "id": 15,
+    "keywords": ["discapacidad", "movilidad reducida", "silla de ruedas", "accesibilidad", "limitación", "limitacion", "capacidad especial"],
+    "question": "¿El servicio atiende personas con discapacidad o movilidad reducida?",
+    "answer": "♿ Sí. El servicio está orientado precisamente a personas que requieren apoyo especial en movilidad. Indica el tipo de necesidad al registrar tu pre-solicitud."
+  },
+  {
+    "id": 16,
+    "keywords": ["bogota", "bogotá", "ciudad", "solo bogota", "zona", "cobertura", "área", "area"],
+    "question": "¿El servicio cubre toda Bogotá?",
+    "answer": "🗺 La cobertura depende de la disponibilidad del equipo. Indica el origen y destino en tu pre-solicitud y el equipo evaluará la viabilidad."
+  },
+  {
+    "id": 17,
+    "keywords": ["transporte", "traslado", "movilidad", "carro", "vehículo", "vehiculo", "ambulancia"],
+    "question": "¿Qué tipo de transporte ofrecen?",
+    "answer": "🚗 El servicio es de transporte especial asistido (no ambulancias de emergencia). El tipo de vehículo depende de la necesidad indicada en tu solicitud."
+  },
+  {
+    "id": 18,
+    "keywords": ["urgencia", "urgente", "emergencia", "rápido", "rapido", "inmediato", "ya"],
+    "question": "¿Pueden atender urgencias?",
+    "answer": "🚨 Para emergencias médicas llama directamente a los servicios de emergencia (123). Este servicio es para traslados programados, no emergencias en curso."
+  },
+  {
+    "id": 19,
+    "keywords": ["programar", "agendar", "reservar", "reserva", "cita", "fecha", "cuando"],
+    "question": "¿Con cuánta anticipación debo programar el servicio?",
+    "answer": "📆 Se recomienda hacer la pre-solicitud con al menos 24–48 horas de anticipación para dar tiempo de revisión y confirmación."
+  },
+  {
+    "id": 20,
+    "keywords": ["acompañante", "acompanante", "familiar", "alguien mas", "otra persona"],
+    "question": "¿Puedo ir con acompañante?",
+    "answer": "👥 Puedes indicar en el campo de observaciones si requieres llevar un acompañante. El equipo tendrá en cuenta esa información al revisar tu caso."
+  },
+  {
+    "id": 21,
+    "keywords": ["recurrente", "semanal", "mensual", "frecuente", "periódico", "periodico", "varias veces"],
+    "question": "¿Puedo hacer solicitudes recurrentes?",
+    "answer": "🔁 Cada traslado requiere una pre-solicitud independiente. Indica en observaciones que es un servicio recurrente y el equipo evaluará el proceso correspondiente."
+  },
+  {
+    "id": 22,
+    "keywords": ["noche", "nocturno", "madrugada", "fines de semana", "fin de semana", "sábado", "sabado", "domingo"],
+    "question": "¿Prestan el servicio de noche o fines de semana?",
+    "answer": "🌙 El servicio opera principalmente en horario hábil. Para solicitudes fuera de ese horario, déjala registrada y el equipo evaluará la disponibilidad."
+  },
+  {
+    "id": 23,
+    "keywords": ["bien estar", "bienestar", "bienestar universitario", "programa", "programas"],
+    "question": "¿Qué es bienestar universitario?",
+    "answer": "🎓 Bienestar universitario es la unidad que promueve la calidad de vida, la equidad y el desarrollo integral de la comunidad institucional. Este bot es uno de sus canales de atención."
+  },
+  {
+    "id": 24,
+    "keywords": ["cultura", "cultura institucional", "valores", "principios", "mision", "misión", "vision", "visión"],
+    "question": "¿Qué es cultura institucional?",
+    "answer": "🏛 La cultura institucional comprende los valores, principios y prácticas que guían el comportamiento dentro de la organización. Bienestar trabaja para fortalecerla."
+  },
+  {
+    "id": 25,
+    "keywords": ["equidad", "equidad de genero", "género", "genero", "inclusión", "inclusion", "diversidad"],
+    "question": "¿Tienen programas de equidad e inclusión?",
+    "answer": "🤝 Sí. La institución promueve la equidad de género, la inclusión y la diversidad como ejes transversales. Para más información, escribe *humano* o *9*."
+  },
+  {
+    "id": 26,
+    "keywords": ["quejas", "queja", "reclamo", "petición", "peticion", "pqrs", "sugerencia", "denuncia"],
+    "question": "¿Dónde presento una queja o reclamo?",
+    "answer": "📣 Las PQRs (Peticiones, Quejas, Reclamos y Sugerencias) se gestionan por los canales institucionales formales. El bot puede orientarte; escribe *humano* o *9* para que el equipo te indique el canal correcto."
+  },
+  {
+    "id": 27,
+    "keywords": ["estudiante", "docente", "empleado", "administrativo", "quien puede", "quién puede", "beneficiario"],
+    "question": "¿Quién puede usar este servicio?",
+    "answer": "👤 El servicio está disponible para miembros de la comunidad institucional que requieran apoyo especial de movilidad. Si tienes dudas sobre tu elegibilidad, escribe *humano*."
+  },
+  {
+    "id": 28,
+    "keywords": ["bot", "robot", "inteligencia artificial", "ia", "chatbot", "automatico", "automático"],
+    "question": "¿Esto es un bot o una persona?",
+    "answer": "🤖 Soy un asistente automatizado. Puedo orientarte y capturar datos iniciales, pero no tengo acceso a sistemas internos ni tomo decisiones. Para atención humana escribe *9*."
+  },
+  {
+    "id": 29,
+    "keywords": ["error", "fallo", "problema", "no funciona", "no sirve", "bug", "equivocado"],
+    "question": "¿Qué hago si el bot tiene un error?",
+    "answer": "⚠️ Si encuentras un error o comportamiento inesperado, escribe *humano* o *9* para que una persona retome tu caso. Puedes describir el problema que tuviste."
+  },
+  {
+    "id": 30,
+    "keywords": ["reiniciar", "empezar de nuevo", "borrar", "limpiar", "reset", "inicio de nuevo"],
+    "question": "¿Cómo reinicio la conversación?",
+    "answer": "🔄 Escribe *menu* o *hola* en cualquier momento para volver al inicio. Esto no borra solicitudes ya registradas."
+  },
+  {
+    "id": 31,
+    "keywords": ["idioma", "inglés", "ingles", "otro idioma", "language"],
+    "question": "¿El bot atiende en otro idioma?",
+    "answer": "🌐 Por ahora el asistente opera solo en español. Si necesitas atención en otro idioma, escribe *humano* o *9*."
+  },
+  {
+    "id": 32,
+    "keywords": ["número", "numero", "contacto", "teléfono", "telefono", "correo", "email", "canal"],
+    "question": "¿Cómo contacto directamente al equipo?",
+    "answer": "📞 Los canales de contacto directo están disponibles en el portal institucional. A través del bot puedes dejar tu pre-solicitud y el equipo te contactará."
+  },
+  {
+    "id": 33,
+    "keywords": ["mascota", "animal", "perro", "gato", "pet", "animal de compañia"],
+    "question": "¿Puedo transportar una mascota junto al servicio?",
+    "answer": "🐾 Indica en el campo de observaciones si requieres llevar una mascota. El equipo evaluará la viabilidad según las condiciones del traslado."
+  },
+  {
+    "id": 34,
+    "keywords": ["seguro", "accidente", "aseguradora", "póliza", "poliza", "responsabilidad"],
+    "question": "¿El traslado tiene cobertura de seguro?",
+    "answer": "🛡 Para información sobre pólizas o cobertura de seguro en el traslado, comunícate con el equipo humano escribiendo *humano* o *9*."
+  },
+  {
+    "id": 35,
+    "keywords": ["equipaje", "maleta", "bulto", "carga", "pertenencias", "cosas"],
+    "question": "¿Puedo llevar equipaje o pertenencias?",
+    "answer": "🧳 Puedes indicar en observaciones si necesitas llevar equipaje o elementos especiales. El equipo lo considerará al organizar el traslado."
+  },
+  {
+    "id": 36,
+    "keywords": ["demora", "retraso", "tarde", "atrasado", "no llegó", "no llego"],
+    "question": "¿Qué hago si el servicio se retrasa?",
+    "answer": "🕐 Si el servicio no llega a tiempo después de confirmado, escribe *humano* o *9* para que el equipo gestione la situación."
+  },
+  {
+    "id": 37,
+    "keywords": ["prioridad", "urgente", "prioritario", "caso especial"],
+    "question": "¿Cómo marco una solicitud como prioritaria?",
+    "answer": "🔴 En el formulario de pre-solicitud hay un campo donde puedes indicar si el caso requiere prioridad alta. El equipo dará atención preferente."
+  },
+  {
+    "id": 38,
+    "keywords": ["hospital", "clínica", "clinica", "médico", "medico", "cita médica", "cita medica", "tratamiento"],
+    "question": "¿El servicio cubre traslados médicos?",
+    "answer": "🏥 Sí. Puedes registrar traslados hacia centros médicos. Indica el origen, destino y el tipo de necesidad en tu pre-solicitud."
+  },
+  {
+    "id": 39,
+    "keywords": ["universidad", "campus", "sede", "instalaciones", "instalacion", "edificio"],
+    "question": "¿El servicio incluye traslados hacia o desde la universidad?",
+    "answer": "🎓 Sí, pueden incluirse traslados hacia instalaciones universitarias. Especifica origen y destino en tu pre-solicitud."
+  },
+  {
+    "id": 40,
+    "keywords": ["formulario", "formato", "plantilla", "como llenar", "cómo llenar", "diligenciar"],
+    "question": "¿Hay un formulario en papel?",
+    "answer": "📄 La pre-solicitud se hace directamente por este chat. No hay formulario en papel; toda la información se captura aquí."
+  },
+  {
+    "id": 41,
+    "keywords": ["niño", "niña", "niñez", "menor", "menores", "hijo", "hija", "bebé", "bebe"],
+    "question": "¿Puedo solicitar el servicio para menores de edad?",
+    "answer": "👶 Indica en la pre-solicitud que el traslado es para un menor y si habrá adulto acompañante. El equipo evaluará el procedimiento aplicable."
+  },
+  {
+    "id": 42,
+    "keywords": ["adulto mayor", "anciano", "tercera edad", "mayor de edad", "vejez", "persona mayor"],
+    "question": "¿Atienden a adultos mayores?",
+    "answer": "👴 Sí. Los adultos mayores son uno de los grupos de atención prioritaria del servicio. Indica su condición en la pre-solicitud."
+  },
+  {
+    "id": 43,
+    "keywords": ["gratuito", "sin costo", "free", "no cobran", "no pago"],
+    "question": "¿El servicio es totalmente gratuito?",
+    "answer": "ℹ️ La pre-solicitud y la orientación a través del bot son gratuitas. Para información sobre tarifas del traslado real, contacta al equipo humano escribiendo *9*."
+  },
+  {
+    "id": 44,
+    "keywords": ["historial", "historial solicitudes", "mis solicitudes", "ver solicitudes", "anteriores"],
+    "question": "¿Puedo ver mis solicitudes anteriores?",
+    "answer": "📂 El bot no tiene un historial de solicitudes visible para el usuario. Para consultas sobre solicitudes previas escribe *humano* o *9*."
+  },
+  {
+    "id": 45,
+    "keywords": ["notificación", "notificacion", "aviso", "avisan", "me contactan", "llaman", "whatsapp", "email aviso"],
+    "question": "¿Me avisan cuando revisen mi solicitud?",
+    "answer": "📬 Sí. El equipo te contactará por el medio que indicaste en tu pre-solicitud (teléfono, correo u otro) una vez revisado el caso."
+  },
+  {
+    "id": 46,
+    "keywords": ["chat", "whatsapp", "canal whatsapp", "este canal", "mediante whatsapp"],
+    "question": "¿Por qué se atiende por WhatsApp?",
+    "answer": "💬 WhatsApp es el canal principal porque facilita el acceso desde cualquier dispositivo sin necesidad de instalar apps adicionales."
+  },
+  {
+    "id": 47,
+    "keywords": ["otro sistema", "app", "aplicación", "aplicacion", "web", "portal", "página web", "pagina web"],
+    "question": "¿Hay otra forma de solicitar el servicio?",
+    "answer": "🌐 Adicionalmente al bot, puedes acceder al portal institucional o contactar directamente al equipo. Este canal es el más ágil para el primer registro."
+  },
+  {
+    "id": 48,
+    "keywords": ["reportar", "reporte", "incidente", "dificultad", "queja servicio", "mal servicio"],
+    "question": "¿Cómo reporto una mala experiencia con el servicio?",
+    "answer": "📝 Puedes reportarlo escribiendo *humano* o *9* y describiendo tu experiencia. El equipo hará el seguimiento del caso."
+  },
+  {
+    "id": 49,
+    "keywords": ["capacitación", "capacitacion", "formación", "formacion", "taller", "charla", "información adicional"],
+    "question": "¿Ofrecen capacitaciones o talleres de bienestar?",
+    "answer": "📚 Sí. Bienestar institucional ofrece actividades formativas periódicas. Para conocer el calendario vigente, escribe *humano* o *9*."
+  },
+  {
+    "id": 50,
+    "keywords": ["que más", "qué más", "otras opciones", "algo más", "mas ayuda", "más información", "informacion adicional"],
+    "question": "¿Qué otras cosas puedo hacer aquí?",
+    "answer": "✨ Puedes: registrar una *pre-solicitud* (opción 3), obtener *información del servicio* (opción 1), hablar con un *humano* (opción 9) o *salir* (opción 0). Escribe *menu* para ver el menú completo."
+  }
+]
